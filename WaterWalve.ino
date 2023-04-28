@@ -13,6 +13,7 @@
 // const char* password;
 
 uint8_t ledPin = LED_BUILTIN;
+uint8_t relePin = 0;
 bool apMode = false;
 
 #ifdef ESP8266
@@ -61,6 +62,21 @@ void handleLed() {
   webRequest->send(200, "text/plain", reply);
 }
 
+void handleRele() {
+  WebServerClass* webRequest = myWebServer.getRequest();
+
+  // http://xxx.xxx.xxx.xxx/led?val=1
+  if(webRequest->hasArg("val")) {
+    int value = webRequest->arg("val").toInt();
+    digitalWrite(relePin, value);
+    //delay (2000);
+    //Serial.print(value);
+  }
+
+  String reply = "Реле ";
+  reply += digitalRead(relePin) ? "Выключено" : "Включено";
+  webRequest->send(200, "text/plain", reply);
+}
 
 void setup(){
   Serial.begin(115200);
@@ -73,7 +89,7 @@ void setup(){
 
   // Add custom page handlers to webserver
   myWebServer.addHandler("/led", HTTP_GET, handleLed);
-
+  myWebServer.addHandler("/rele", HTTP_GET, handleRele);
   // Start webserver
   if (myWebServer.begin()) {
     Serial.print(F("ESP Web Server started on IP Address: "));
@@ -83,7 +99,9 @@ void setup(){
     Serial.println(F("Open /update page to upload firmware and filesystem updates"));
   }
 
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(relePin, OUTPUT);
+
 }
 
 
