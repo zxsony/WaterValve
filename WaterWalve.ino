@@ -56,8 +56,8 @@ void handleLed() {
     //Serial.print(value);
   }
 
-  String reply = "LED is now ";
-  reply += digitalRead(ledPin) ? "OFF" : "ON";
+  String reply = "Светодиод ";
+  reply += digitalRead(ledPin) ? "Выключен" : "Включен";
   webRequest->send(200, "text/plain", reply);
 }
 
