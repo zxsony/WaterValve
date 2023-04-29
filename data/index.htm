@@ -33,19 +33,31 @@
           <hgroup>
             <h1>Управление водопроводным краном</h1>
           </hgroup>
-          <a href="/setup"><p>setup</p></a>
-          <a href="/edit"><p>edit</p></a>
-          <label for="remember">
-            <input type="checkbox" role="switch" id="toggle-led" name="toggle-led">
-            Встроенный светодиод
-          </label>
-          <label for="remember">
-            <input type="checkbox" role="switch" id="toggle-rele" name="toggle-rele">
-            Реле
-          </label>
+          <table border=2>
+            <tr>
+              <td><a href="/setup">Setup page</a></td>
+              <td><a href="/edit">Edit page</a></td>
+            </tr>
+            <tr>
+              <td>
+                <label for="remember">
+                  <input type="checkbox" role="switch" id="toggle-led" name="toggle-led" checked>
+                  Светодиод
+                </label>
+              </td>
+              <td><div id="esp-response">Выкл</div></td>
+            </tr>
+            <tr>
+              <td>
+                <label for="remember">
+                  <input type="checkbox" role="switch" id="toggle-relay" name="toggle-relay" checked>
+                  Реле
+                </label>
+              </td>
+              <td><div id="esp-response2">Выкл</div></td>
+            </tr>
+          </table>
           <br>
-          <p id="esp-response"></p>
-          <p id="esp-response2"></p>
           <img src="/img/walve.jpg" style="opacity: 0.75"/>
         </div>
       </article>
@@ -62,7 +74,7 @@
         .then(response => response.text())    // Parse the response 
         .then(text => {                       // DO something with response
           console.log(text);
-          document.getElementById('esp-response').innerHTML = text + ' <i>(Led on low level)</i>';
+          document.getElementById('esp-response').innerHTML = text; // + ' <i>(Led on low level)</i>';
         });
       }
       
@@ -72,21 +84,21 @@
     
     <script type="text/javascript">
       // This function fetch the GET request to the ESP webserver
-      function toggleRele() {
+      function toggleRelay() {
         const pars = new URLSearchParams({
-          val:  document.getElementById('toggle-rele').checked ? '1' : '0'
+          val:  document.getElementById('toggle-relay').checked ? '1' : '0'
         });
         
-        fetch('/rele?' + pars )                // Do the request
+        fetch('/relay?' + pars )                // Do the request
         .then(response => response.text())    // Parse the response 
         .then(text => {                       // DO something with response
           console.log(text);
-          document.getElementById('esp-response2').innerHTML = text + ' <i>(Rele on high level)</i>';
+          document.getElementById('esp-response2').innerHTML = text; //+ ' <i>(Rele on high level)</i>';
         });
       }
       
       // Add event listener to the Rele checkbox (the function will be called on every change)
-      document.getElementById('toggle-rele').addEventListener('change', toggleRele );
+      document.getElementById('toggle-relay').addEventListener('change', toggleRelay );
     </script>
   </body>
 </html>

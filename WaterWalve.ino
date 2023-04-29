@@ -13,7 +13,7 @@
 // const char* password;
 
 uint8_t ledPin = LED_BUILTIN;
-uint8_t relePin = 0;
+uint8_t relayPin = 0;
 bool apMode = false;
 
 #ifdef ESP8266
@@ -57,30 +57,31 @@ void handleLed() {
     //Serial.print(value);
   }
 
-  String reply = "Светодиод ";
-  reply += digitalRead(ledPin) ? "Выключен" : "Включен";
+  String reply;// = "Светодиод ";
+  reply += digitalRead(ledPin) ? "Выкл" : "Вкл";
   webRequest->send(200, "text/plain", reply);
 }
 
-void handleRele() {
+void handleRelay() {
   WebServerClass* webRequest = myWebServer.getRequest();
 
   // http://xxx.xxx.xxx.xxx/led?val=1
   if(webRequest->hasArg("val")) {
     int value = webRequest->arg("val").toInt();
-    digitalWrite(relePin, value);
+    digitalWrite(relayPin, value);
     //delay (2000);
     //Serial.print(value);
   }
 
-  String reply = "Реле ";
-  reply += digitalRead(relePin) ? "Выключено" : "Включено";
+  String reply;// = "Реле ";
+  reply += digitalRead(relayPin) ? "Выкл" : "Вкл";
   webRequest->send(200, "text/plain", reply);
 }
 
 void setup(){
   Serial.begin(115200);
-
+  digitalWrite(ledPin, 1);
+  digitalWrite(relayPin, 1);
   // FILESYSTEM INIT
   startFilesystem();
 
@@ -89,7 +90,7 @@ void setup(){
 
   // Add custom page handlers to webserver
   myWebServer.addHandler("/led", HTTP_GET, handleLed);
-  myWebServer.addHandler("/rele", HTTP_GET, handleRele);
+  myWebServer.addHandler("/relay", HTTP_GET, handleRelay);
   // Start webserver
   if (myWebServer.begin()) {
     Serial.print(F("ESP Web Server started on IP Address: "));
@@ -100,7 +101,7 @@ void setup(){
   }
 
   pinMode(ledPin, OUTPUT);
-  pinMode(relePin, OUTPUT);
+  pinMode(relayPin, OUTPUT);
 
 }
 
