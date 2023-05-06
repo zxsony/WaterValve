@@ -1,5 +1,5 @@
-# WaterWalve
-Remote control water walve over web interface.
+# WaterValve
+Remote control water Valve over web interface.
 Dependencies:
 
 esp-fs-webserver 1.2.2
