@@ -78,6 +78,30 @@ void handleRelay() {
   webRequest->send(200, "text/plain", reply);
 }
 
+void handleTemp() {
+  float temp1 = 36.6;
+  float temp2 = 42.0;
+  int value;
+  String reply;
+  WebServerClass* webRequest = myWebServer.getRequest();
+
+  // http://xxx.xxx.xxx.xxx/led?val=1
+  if(webRequest->hasArg("val")) {
+    value = webRequest->arg("val").toInt();
+    //digitalWrite(relayPin, value);
+    //delay (2000);
+    //Serial.print(value);
+  }
+
+  if(value == 1){
+  reply += temp1;
+  }
+  if(value == 2){
+  reply += temp2;
+  }  
+  webRequest->send(200, "text/plain", reply);
+}
+
 void setup(){
   Serial.begin(115200);
   digitalWrite(ledPin, 1);
@@ -91,6 +115,7 @@ void setup(){
   // Add custom page handlers to webserver
   myWebServer.addHandler("/led", HTTP_GET, handleLed);
   myWebServer.addHandler("/relay", HTTP_GET, handleRelay);
+  myWebServer.addHandler("/temp", HTTP_GET, handleTemp);
   // Start webserver
   if (myWebServer.begin()) {
     Serial.print(F("ESP Web Server started on IP Address: "));

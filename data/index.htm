@@ -6,7 +6,7 @@
   <link rel="shortcut icon" type="image/jpg" href="img/favicon.ico"/>
   <!--Pico - Minimal CSS Framework for semantic info: HTML https://picocss.com/ -->
   <link rel="stylesheet" type="text/css" href="css/pico.fluid.classless.css">
-
+<script type="text/javascript" src='./js/index.js'></script>
   <!-- Cyustom page styling -->
   <style>
     html {
@@ -56,6 +56,10 @@
               </td>
               <td><div id="esp-response2">Выкл</div></td>
             </tr>
+            <tr>
+              <td><div id="t1">null</div></td>
+              <td><div id="t2">null</div></td>
+            </tr>
           </table>
           <br>
           <img src="/img/walve.jpg" style="opacity: 0.75"/>
@@ -69,11 +73,12 @@
         const pars = new URLSearchParams({
           val:  document.getElementById('toggle-led').checked ? '1' : '0'
         });
-        
+        //test ();
         fetch('/led?' + pars )                // Do the request
         .then(response => response.text())    // Parse the response 
         .then(text => {                       // DO something with response
-          console.log(text);
+          console.log("led " + text);
+          console.log(pars.toString());
           document.getElementById('esp-response').innerHTML = text; // + ' <i>(Led on low level)</i>';
         });
       }
@@ -92,7 +97,7 @@
         fetch('/relay?' + pars )                // Do the request
         .then(response => response.text())    // Parse the response 
         .then(text => {                       // DO something with response
-          console.log(text);
+          console.log("relay " + text);
           document.getElementById('esp-response2').innerHTML = text; //+ ' <i>(Rele on high level)</i>';
         });
       }
