@@ -23,4 +23,4 @@ function requeryTemp () {
 
 }
 
-setInterval(requeryTemp, 10000);
+setInterval(requeryTemp, 1000);
