@@ -13,14 +13,10 @@
 
 #define DEBUG false
 
-// In order to set SSID and password open the /setup webserver page
-// const char* ssid;
-// const char* password;
-
 const char* ssid = "NVRAM WARNING";
 const char* pass = "Lift80Lift";
 uint8_t retries = 0;
-// GPIO0, GPIO2 - free. GPIO1 - TX, GPIO3 - RX.
+// For ESP-01: GPIO0, GPIO2 - free. GPIO1 - TX, GPIO3 - RX.
 uint8_t ledPin = 2;
 uint8_t relayPin = 0;
 bool apMode = false;
