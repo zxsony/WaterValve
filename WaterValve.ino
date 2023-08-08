@@ -11,7 +11,7 @@
 #define LED_BUILTIN 1
 #endif
 
-#define DEBUG false
+#define DEBUG true
 
 const char* ssid = "NVRAM WARNING";
 const char* pass = "Lift80Lift";
