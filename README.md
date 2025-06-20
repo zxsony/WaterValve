@@ -8,3 +8,6 @@ esp-fs-webserver 1.2.2
 ArduinoJson 6.21.2
 https://github.com/bblanchon/ArduinoJson
 
+Streaming 6.1.1
+https://github.com/janelia-arduino/Streaming
+
